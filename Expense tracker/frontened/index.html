@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PennyWise | Money Made Fun</title>
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+      <title>PennyWise | Money Made Fun</title>
+
+      <!-- PWA Settings -->
+      <link rel="manifest" href="manifest.json" />
+      <meta name="theme-color" content="#8b5cf6" />
+      <meta name="mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+      <link rel="stylesheet" href="style.css" />
+    </head>
+    
+
+  <body>
+    <!-- NAVBAR -->
+    <header class="navbar">
+      <div>
+        <h1>💸 PennyWise</h1>
+        <p>Spend smart. Save more. Live your vibe.</p>
+      </div>
+
+      <button id="themeToggle" class="theme-btn">🌙 Dark Mode</button>
+    </header>
+
+    <main class="container">
+      <!-- WELCOME -->
+      <section class="welcome">
+        <h2>Hey, Money Boss! 👋</h2>
+        <p>Take control of your money and make every rupee count.</p>
+      </section>
+
+      <!-- DASHBOARD -->
+      <section class="dashboard">
+        <div class="summary-card balance-card">
+          <h3>💰 Total Balance</h3>
+          <h2 id="balance">₹0.00</h2>
+        </div>
+
+        <div class="summary-card income-card">
+          <h3>📈 Total Income</h3>
+          <h2 id="income">₹0.00</h2>
+        </div>
+
+        <div class="summary-card expense-card">
+          <h3>💸 Total Expenses</h3>
+          <h2 id="expense">₹0.00</h2>
+        </div>
+      </section>
+
+      <!-- ADD TRANSACTION -->
+      <section class="panel">
+        <h2>➕ Add a Transaction</h2>
+
+        <form id="transactionForm" class="transaction-form">
+          <input
+            type="text"
+            id="title"
+            placeholder="Transaction name"
+            required
+          />
+
+          <input
+            type="number"
+            id="amount"
+            placeholder="Amount (₹)"
+            min="0.01"
+            step="0.01"
+            required
+          />
+
+          <select id="type" required>
+            <option value="expense">Expense</option>
+            <option value="income">Income</option>
+          </select>
+
+          <select id="category" required>
+            <option value="Food">Food</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Travel">Travel</option>
+            <option value="Education">Education</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Beauty">Beauty</option>
+            <option value="Bills">Bills</option>
+            <option value="Salary">Salary</option>
+            <option value="Other">Other</option>
+          </select>
+
+          <input type="date" id="date" required />
+
+          <button type="submit" class="primary-btn">Add Transaction</button>
+        </form>
+      </section>
+
+      <!-- TRANSACTION HISTORY -->
+      <section class="panel">
+        <h2>📋 Recent Transactions</h2>
+
+        <!-- SEARCH AND FILTERS -->
+        <div class="filter-container">
+          <input
+            type="search"
+            id="search"
+            placeholder="🔍 Search transactions"
+          />
+
+          <select id="filterType">
+            <option value="all">All Types</option>
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+          </select>
+
+          <select id="filterCategory">
+            <option value="all">All Categories</option>
+            <option value="Food">Food</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Travel">Travel</option>
+            <option value="Education">Education</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Beauty">Beauty</option>
+            <option value="Bills">Bills</option>
+            <option value="Salary">Salary</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <!-- TRANSACTION LIST -->
+        <div id="transactionList" class="transaction-list"></div>
+
+        <!-- DAY 9: EXPORT TRANSACTIONS -->
+        <button id="exportCSV" class="export-btn">
+          📥 Export Transactions
+        </button>
+      </section>
+
+      <!-- MONTHLY ANALYTICS -->
+      <section class="panel">
+        <h2>📊 Monthly Money Analytics</h2>
+
+        <div class="analytics-grid">
+          <div class="analytics-card">
+            <h3>Monthly Income</h3>
+            <h2 id="monthlyIncome">₹0.00</h2>
+          </div>
+
+          <div class="analytics-card">
+            <h3>Monthly Expenses</h3>
+            <h2 id="monthlyExpense">₹0.00</h2>
+          </div>
+        </div>
+
+        <!-- CATEGORY BREAKDOWN -->
+        <h3 class="subheading">Spending by Category</h3>
+
+        <div id="categoryBreakdown"></div>
+
+        <!-- SMART INSIGHTS -->
+        <div class="smart-insights">
+          <h3>💡 Your Smart Money Insights</h3>
+
+          <div class="insight-cards">
+            <div class="insight-card">
+              <h4>Monthly Spending</h4>
+              <h2 id="totalMonthlySpending">₹0.00</h2>
+            </div>
+
+            <div class="insight-card">
+              <h4>Top Spending Category</h4>
+              <h2 id="topSpendingCategory">Not available</h2>
+            </div>
+          </div>
+
+          <div class="saving-tip" id="savingTip">
+            Start tracking your expenses to receive money-saving tips! 💜
+          </div>
+        </div>
+      </section>
+
+      <!-- BUDGET TRACKER -->
+      <section class="panel">
+        <h2>🎯 Monthly Budget</h2>
+
+        <form id="budgetForm" class="inline-form">
+          <input
+            type="number"
+            id="budgetAmount"
+            placeholder="Set monthly budget (₹)"
+            min="0"
+            step="0.01"
+            required
+          />
+
+          <button type="submit" class="primary-btn">Save Budget</button>
+        </form>
+
+        <h3 id="budgetText">Your monthly budget: ₹0.00</h3>
+
+        <p id="budgetRemaining">Remaining: ₹0.00</p>
+
+        <div class="progress-container">
+          <div id="budgetProgress" class="progress-bar"></div>
+        </div>
+
+        <p id="budgetMessage">Set a budget to start tracking your spending.</p>
+      </section>
+
+      <!-- SAVINGS GOAL -->
+      <section class="panel">
+        <h2>🌱 Savings Goal</h2>
+
+        <form id="savingsForm" class="transaction-form">
+          <input
+            type="text"
+            id="goalName"
+            placeholder="Goal name (e.g. New Laptop)"
+            required
+          />
+
+          <input
+            type="number"
+            id="goalAmount"
+            placeholder="Target amount (₹)"
+            min="0.01"
+            step="0.01"
+            required
+          />
+
+          <input
+            type="number"
+            id="goalSaved"
+            placeholder="Already saved (₹)"
+            min="0"
+            step="0.01"
+            value="0"
+            required
+          />
+
+          <button type="submit" class="primary-btn">Create Goal</button>
+        </form>
+
+        <div id="savingsDisplay"></div>
+      </section>
+
+      <!-- DAY 6: NO-SPEND CHALLENGE -->
+      <section class="panel challenge-section">
+        <h2>🏆 No-Spend Challenge</h2>
+
+        <p class="section-description">
+          Challenge yourself to spend less and save more!
+        </p>
+
+        <div class="challenge-setup">
+          <label for="challengeDuration"> Choose your challenge: </label>
+
+          <select id="challengeDuration">
+            <option value="7">7 Days Challenge</option>
+            <option value="15">15 Days Challenge</option>
+            <option value="30">30 Days Challenge</option>
+          </select>
+
+          <button id="startChallenge" class="primary-btn">
+            🚀 Start Challenge
+          </button>
+        </div>
+
+        <div id="challengeDisplay">
+          <p class="empty">Start your first No-Spend Challenge! 💜</p>
+        </div>
+      </section>
+
+      <!-- DAY 7: SUBSCRIPTIONS TRACKER -->
+      <section class="panel subscription-section">
+        <h2>🔄 Subscriptions & Recurring Payments</h2>
+
+        <p class="section-description">Never forget your upcoming payments!</p>
+
+        <form id="subscriptionForm" class="subscription-form">
+          <input
+            type="text"
+            id="subscriptionName"
+            placeholder="Subscription name (Netflix, Spotify...)"
+            required
+          />
+
+          <input
+            type="number"
+            id="subscriptionAmount"
+            placeholder="Amount (₹)"
+            min="0.01"
+            step="0.01"
+            required
+          />
+
+          <select id="subscriptionFrequency" required>
+            <option value="monthly">Monthly</option>
+            <option value="yearly">Yearly</option>
+            <option value="weekly">Weekly</option>
+          </select>
+
+          <input type="date" id="subscriptionDate" required />
+
+          <button type="submit" class="primary-btn">➕ Add Subscription</button>
+        </form>
+
+        <!-- SUBSCRIPTION SUMMARY -->
+        <div class="subscription-summary">
+          <div class="subscription-summary-card">
+            <h3>💳 Total Monthly Cost</h3>
+            <h2 id="monthlySubscriptionTotal">₹0.00</h2>
+          </div>
+
+          <div class="subscription-summary-card">
+            <h3>📦 Active Subscriptions</h3>
+            <h2 id="subscriptionCount">0</h2>
+          </div>
+        </div>
+
+        <!-- SUBSCRIPTION LIST -->
+        <h3 class="subheading">Your Subscriptions</h3>
+
+        <div id="subscriptionList"></div>
+
+        <!-- UPCOMING PAYMENTS -->
+        <h3 class="subheading">⏰ Upcoming Payments</h3>
+
+        <div id="upcomingPayments"></div>
+      </section>
+
+      <!-- DAY 8: EXPENSE CALENDAR -->
+      <section class="calendar-section">
+        <div class="section-heading">
+          <h2>📅 Expense Calendar</h2>
+          <p>Track your spending day by day</p>
+        </div>
+
+        <div class="calendar-card">
+          <!-- CALENDAR HEADER -->
+          <div class="calendar-header">
+            <button id="prevMonth" class="calendar-nav">❮</button>
+
+            <h3 id="calendarMonth">Month Year</h3>
+
+            <button id="nextMonth" class="calendar-nav">❯</button>
+          </div>
+
+          <!-- WEEKDAYS -->
+          <div class="calendar-weekdays">
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+          </div>
+
+          <!-- CALENDAR DAYS -->
+          <div id="calendarGrid" class="calendar-grid"></div>
+
+          <!-- LEGEND -->
+          <div class="calendar-legend">
+            <span>
+              <i class="legend-dot no-spending"></i>
+              No spending
+            </span>
+
+            <span>
+              <i class="legend-dot spending"></i>
+              Spent money
+            </span>
+          </div>
+        </div>
+
+        <!-- SELECTED DATE DETAILS -->
+        <div id="selectedDateDetails" class="selected-date-details">
+          <h3>📝 Daily Transactions</h3>
+
+          <p>Select a date to see your transactions.</p>
+        </div>
+      </section>
+
+      <!-- CHARTS / SPENDING VISUALIZER -->
+      <section class="panel charts-section">
+        <h2>📈 Spending Visualizer</h2>
+
+        <p class="section-description">
+          Your money story, shown through charts!
+        </p>
+
+        <div class="charts-grid">
+          <!-- EXPENSE CATEGORY CHART -->
+          <div class="chart-card">
+            <h3>Where Does Your Money Go? 🛍️</h3>
+
+            <div class="chart-container">
+              <canvas id="expenseChart"></canvas>
+            </div>
+          </div>
+
+          <!-- INCOME VS EXPENSE CHART -->
+          <div class="chart-card">
+            <h3>Income vs Expenses 💰</h3>
+
+            <div class="chart-container">
+              <canvas id="incomeExpenseChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>Made with 💜 by PennyWise | Spend smart, live better!</p>
+    </footer>
+
+    <!-- CHART.JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- MAIN JAVASCRIPT -->
+    <script src="script.js"></script>
+  </body>
+</html>
